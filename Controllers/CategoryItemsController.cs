@@ -24,21 +24,30 @@ namespace Shopping_cart_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> GetCategoryItems()
         {
-            if (_context.CategoryItems == null)
+            var catagories = new List<CategoryItem>();
+          if (_context.CategoryItems == null)
+          {
+              return NotFound();
+          }
+            try
+            {
+             catagories =  await _context.CategoryItems.ToListAsync();
+            }
+            catch(Exception )
             {
                 return NotFound();
             }
-            return await _context.CategoryItems.ToListAsync();
+            return catagories;
         }
 
         // GET: api/CategoryItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryItem>> GetCategoryItem(long id)
         {
-            if (_context.CategoryItems == null)
-            {
-                return NotFound();
-            }
+          if (_context.CategoryItems == null)
+          {
+              return NotFound();
+          }
             var categoryItem = await _context.CategoryItems.FindAsync(id);
 
             if (categoryItem == null)
@@ -55,14 +64,14 @@ namespace Shopping_cart_api.Controllers
         [HttpPost]
         public async Task<ActionResult<CategoryItem>> PostCategoryItem(CategoryItem categoryItem)
         {
-            if (_context.CategoryItems == null)
-            {
-                return Problem("Entity set 'CategoryContext.CategoryItems'  is null.");
-            }
+          if (_context.CategoryItems == null)
+          {
+              return Problem("Entity set 'CategoryContext.CategoryItems'  is null.");
+          }
             _context.CategoryItems.Add(categoryItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCategoryItem), new { id = categoryItem.Id }, categoryItem);
+            return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
         }
 
         // DELETE: api/CategoryItems/5
