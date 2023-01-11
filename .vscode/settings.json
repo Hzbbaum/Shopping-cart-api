@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "client\\bin\\Release\\net7.0\\publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/0dc40137-fcba-46e3-b963-875ba2c5de83/AppServices/subscriptions/0dc40137-fcba-46e3-b963-875ba2c5de83/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/shoping-cart-2"
+}
